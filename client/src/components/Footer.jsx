@@ -12,6 +12,7 @@ function Footer() {
             target="_blank" 
             rel="noopener noreferrer"
             data-testid="footer-instagram"
+            className="no-focus-outline"
           >
             Instagram
           </a>
@@ -20,6 +21,7 @@ function Footer() {
             target="_blank" 
             rel="noopener noreferrer"
             data-testid="footer-whatsapp"
+            className="no-focus-outline"
           >
             WhatsApp
           </a>

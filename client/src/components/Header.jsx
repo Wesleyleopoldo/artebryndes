@@ -9,12 +9,13 @@ function Header() {
           {SITE.logoText}
         </Link>
         <nav className="nav-links">
-          <Link to="/" data-testid="nav-home">Início</Link>
+          <Link to="/" data-testid="nav-home" className="inicio-nav-btn no-focus-outline">Início</Link>
           <a 
             href={SITE.instagram} 
             target="_blank" 
             rel="noopener noreferrer"
             data-testid="nav-instagram"
+            className="instagram-nav-btn no-focus-outline"
           >
             Instagram
           </a>

@@ -57,14 +57,18 @@ body {
     align-items: center;
 }
 
-.nav-links a {
+.nav-links .inicio-nav-btn, .instagram-nav-btn  {
     text-decoration: none;
     color: var(--text);
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links .inicio-nav-btn:hover {
+    color: var(--rose);
+}
+
+.nav-links .instagram-nav-btn:hover {
     color: var(--rose);
 }
 
@@ -225,6 +229,8 @@ body {
 
 /* Product Card */
 .product-card {
+    display: flex;
+    flex-direction: column;
     flex: 0 0 250px;
     background: var(--card-bg);
     border-radius: 16px;
@@ -262,7 +268,9 @@ body {
 }
 
 .product-name {
-    font-size: 1.1rem;
+    
+
+    font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--text);
@@ -273,6 +281,7 @@ body {
     font-weight: 700;
     color: var(--bronze);
     margin-bottom: 1rem;
+    margin-top: auto;
 }
 
 .order-btn {
@@ -288,6 +297,8 @@ body {
     text-align: center;
     display: block;
     transition: background 0.3s ease;
+
+    margin-top: 15px auto;
 }
 
 .order-btn:hover {
@@ -392,6 +403,11 @@ body {
         gap: 1rem;
     }
 }
+
+.no-focus-outline:focus {
+    outline: none !important;
+}
+
 
 /* Focus styles for accessibility */
 a:focus, button:focus {

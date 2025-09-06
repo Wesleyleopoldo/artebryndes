@@ -1,1 +1,2 @@
-.cache/ \n .local/ \n .upm/ \n node_modules/ \n
+node_modules/*
+node_modules
