@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { SITE } from "../data/siteConfig";
+import logo from "../assets/logo-artebryndes-fundoremovido.png"
 
 function Header() {
   return (
     <header className="header">
       <div className="header-container">
-        <Link to="/" className="logo" data-testid="logo-link">
-          {SITE.logoText}
+        <Link to="/" className="logo no-focus-outline" data-testid="logo-link">
+          <img src={logo} alt="logo" />
         </Link>
         <nav className="nav-links">
           <Link to="/" data-testid="nav-home" className="inicio-nav-btn no-focus-outline">Início</Link>

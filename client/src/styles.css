@@ -1,11 +1,11 @@
-/* CSS Variables para fácil customização */
+
 :root {
-    --bronze: #b87333;
+    --bronze: #ad6e5f;
     --bronze-dark: #8a5626;
     --rose: #e91e63;
     --rose-soft: #f8bbd0;
-    --bg: #fff7f9;
-    --text: #1a1a1a;
+    --bg: #f9f4f3;
+    --text: #333333;
     --muted: #666;
     --card-bg: #ffffff;
     --border: #f1e4e1;
@@ -28,7 +28,7 @@ body {
 .header {
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
+    padding: 0rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -50,6 +50,18 @@ body {
     color: var(--bronze);
     text-decoration: none;
 }
+
+.logo img {
+  height: 77px;         /* ⬅️ Tamanho reduzido (ajuste conforme seu header) */
+  width: auto;          /* Mantém proporção */
+  object-fit: contain;  /* Evita distorção (opcional aqui, mas seguro) */
+  display: block;       /* Remove espaço extra abaixo da imagem */
+  padding: 0;           /* Garante que não tenha espaço interno */
+  margin: 0;            /* Remove margens externas */
+  border: none;         /* Remove qualquer borda padrão */
+  box-sizing: content-box; /* Garante que altura e largura não incluam padding/border */
+}
+
 
 .nav-links {
     display: flex;
@@ -120,13 +132,13 @@ body {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-shadow:  0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-content p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content */
@@ -279,7 +291,7 @@ body {
 .product-price {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--bronze);
+    color: #c59d5f;
     margin-bottom: 1rem;
     margin-top: auto;
 }
@@ -330,7 +342,7 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--bronze);
+    background: #c2746d;
     color: white;
     padding: 2rem 0;
     text-align: center;
@@ -425,4 +437,72 @@ a:focus, button:focus {
 @keyframes loading {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
+}
+
+
+/* Container principal ocupa a tela inteira e centraliza o conteúdo */
+.container-notfound {
+  display: flex;
+  flex-direction: column;
+  min-height: 64.60vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb; /* fundo claro tipo gray-50 */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Sub-container para controlar o alinhamento do card */
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card com largura máxima e responsivo */
+.card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Padding interno do conteúdo do card */
+.card-content {
+  padding: 1.5rem 1.25rem;
+}
+
+/* Cabeçalho com ícone e texto */
+.content-notfound {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Ícone do alerta */
+.alert-circle {
+  width: 2rem;
+  height: 2rem;
+  color: #ef4444; /* vermelho tipo red-500 */
+  flex-shrink: 0;
+}
+
+/* Título do 404 */
+.text-notfound {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827; /* gray-900 */
+}
+
+/* Descrição abaixo do título */
+.description-notfound {
+  font-size: 0.875rem; /* 14px */
+  color: #6b7280; /* gray-600 */
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  text-align: center;
 }

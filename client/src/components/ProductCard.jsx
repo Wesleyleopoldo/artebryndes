@@ -40,7 +40,7 @@ function ProductCard({ product }) {
         className="order-btn"
         data-testid={`order-btn-${product.id}`}
       >
-        <FaShoppingCart>Colocar no carrinho</FaShoppingCart>
+        <FaShoppingCart /> Adicionar
       </button>
 
     </div>
