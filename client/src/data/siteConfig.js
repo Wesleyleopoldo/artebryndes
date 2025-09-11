@@ -5,7 +5,7 @@ export const SITE = {
   instagram: 'https://instagram.com/artebryndes',
   // Troco essa URL depois:
   heroBackground:
-    'https://jbenaputhfviyvvesgiw.supabase.co/storage/v1/object/public/catalogo-artebryndes/LOGO-ARTEBRYNDES.jpeg',
+    '../assets/background-image-hero.png',
   heroTitle: 'Bolsas Personalizadas',
   heroSubtitle: 'Peças únicas! — encomende pelo WhatsApp',
 };

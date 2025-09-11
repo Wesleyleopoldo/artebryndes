@@ -10,19 +10,25 @@ function Header() {
           <img src={logo} alt="logo" />
         </Link>
         <nav className="nav-links">
+
+          <Link to="/carrinho" className="inicio-nav-btn no-focus-outline">
+            Carrinho
+          </Link>
+
+
           <Link to="/" data-testid="nav-home" className="inicio-nav-btn no-focus-outline">Início</Link>
-          <a 
-            href={SITE.instagram} 
-            target="_blank" 
+          <a
+            href={SITE.instagram}
+            target="_blank"
             rel="noopener noreferrer"
             data-testid="nav-instagram"
             className="instagram-nav-btn no-focus-outline"
           >
             Instagram
           </a>
-          <a 
-            href={`https://wa.me/${SITE.contactWhatsapp}`} 
-            target="_blank" 
+          <a
+            href={`https://wa.me/${SITE.contactWhatsapp}`}
+            target="_blank"
             rel="noopener noreferrer"
             className="whatsapp-btn"
             aria-label="Fale conosco pelo WhatsApp"
