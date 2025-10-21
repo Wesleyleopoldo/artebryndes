@@ -10,6 +10,7 @@ export const categories = [
         price: 89.90,
         image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Bolsa tiracolo confeccionada artesanalmente em tecido premium rosa. Possui alça ajustável, compartimentos internos e acabamento refinado. Perfeita para ocasiões casuais e eventos especiais.',
       },
       {
         id: 'b2',
@@ -17,6 +18,7 @@ export const categories = [
         price: 125.00,
         image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: '+ Vendido',
+        description: 'Nossa bolsa mais vendida! Elegante e versátil, feita em couro sintético de alta qualidade com detalhes dourados. Ideal para eventos formais e encontros especiais. Inclui alça removível.',
       },
       {
         id: 'b3',
@@ -24,12 +26,14 @@ export const categories = [
         price: 75.00,
         image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Novidade da coleção Primavera! Bolsa crossbody com estampa floral exclusiva, alça ajustável e fechamento em zíper. Interior forrado com bolsos organizadores. Perfeita para o dia a dia.',
       },
       {
         id: 'b4',
         name: 'Bolsa Carteira Compacta',
         price: 45.00,
         image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Carteira compacta e funcional com design minimalista. Ideal para ocasiões que exigem praticidade sem abrir mão do estilo. Possui compartimentos para cartões e dinheiro.',
       },
       {
         id: 'b5',
@@ -37,12 +41,14 @@ export const categories = [
         price: 110.00,
         image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Bolsa tote artesanal com amplo espaço interno, perfeita para o dia a dia. Confeccionada à mão com tecidos resistentes e alças reforçadas. Inclui bolsos internos organizadores.',
       },
       {
         id: 'b6',
         name: 'Clutch Evening Sofisticada',
         price: 85.00,
         image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Clutch elegante para ocasiões especiais, com acabamento premium e detalhes sofisticados. Design slim com corrente removível dourada. Perfeita para eventos noturnos.',
       },
       {
         id: 'b7',
@@ -50,12 +56,14 @@ export const categories = [
         price: 68.00,
         image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Nova bolsa casual em tom verde vibrante, perfeita para looks descontraídos. Material sustentável com acabamento moderno. Alça ajustável e fechamento por zíper.',
       },
       {
         id: 'b8',
         name: 'Bolsa Estruturada',
         price: 95.00,
         image: 'https://images.unsplash.com/photo-1591348486654-9eb9c017a16a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Bolsa com design estruturado e elegante, ideal para looks profissionais. Confeccionada com material premium e forro interno de alta qualidade. Inclui alça de mão e tiracolo.',
       },
     ],
   },
@@ -70,6 +78,7 @@ export const categories = [
         price: 35.00,
         image: 'https://images.unsplash.com/photo-1599751449128-eb7249c3d6b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Necessaire espaçosa ideal para viagens, com compartimentos internos e revestimento impermeável. Possui alça lateral para fácil transporte e diversos bolsos para organização.',
       },
       {
         id: 'n2',
@@ -77,6 +86,7 @@ export const categories = [
         price: 42.00,
         image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: '+ Vendido',
+        description: 'Nossa necessaire mais vendida! Perfeita para guardar maquiagens e cosméticos, com divisórias ajustáveis e espelho interno. Material lavável e fácil de limpar.',
       },
       {
         id: 'n3',
@@ -84,12 +94,14 @@ export const categories = [
         price: 28.00,
         image: 'https://images.unsplash.com/photo-1591814468924-caf88d1232e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Necessaire compacta feita artesanalmente, perfeita para levar o essencial. Confeccionada com carinho em tecido resistente e forro impermeável. Ideal para bolsa ou mochila.',
       },
       {
         id: 'n4',
         name: 'Necessaire Térmica',
         price: 55.00,
         image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Necessaire com revestimento térmico especial, mantém a temperatura dos produtos por mais tempo. Perfeita para cosméticos sensíveis à temperatura ou para viagens.',
       },
       {
         id: 'n5',
@@ -97,6 +109,7 @@ export const categories = [
         price: 48.00,
         image: 'https://images.unsplash.com/photo-1522706604291-210a56c3b376?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Nova necessaire com design vintage inspirado nos anos 50. Acabamento retrô com detalhes metálicos e estampa exclusiva. Interior espaçoso com divisórias práticas.',
       },
       {
         id: 'n6',
@@ -104,12 +117,14 @@ export const categories = [
         price: 25.00,
         image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Necessaire infantil feita à mão com estampas divertidas e cores alegres. Material durável e lavável, ideal para crianças levarem seus pertences para escola ou passeios.',
       },
       {
         id: 'n7',
         name: 'Necessaire Grande',
         price: 65.00,
         image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Necessaire de tamanho generoso com múltiplos compartimentos. Perfeita para organizar todos os seus itens de higiene e beleza. Inclui espelho e divisórias removíveis.',
       },
       {
         id: 'n8',
@@ -117,6 +132,7 @@ export const categories = [
         price: 52.00,
         image: 'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Nova necessaire com acabamento metalizado dourado, trazendo glamour ao seu dia a dia. Material impermeável de alto brilho e interior forrado em tecido premium.',
       },
     ],
   },
@@ -131,6 +147,7 @@ export const categories = [
         price: 15.00,
         image: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Chaveiro artesanal em formato de coração, confeccionado com amor e cuidado. Feito com material resistente e acabamento delicado. Perfeito para presentear quem você ama.',
       },
       {
         id: 'a2',
@@ -138,6 +155,7 @@ export const categories = [
         price: 12.00,
         image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: '+ Vendido',
+        description: 'Nosso laço mais vendido! Confeccionado em cetim de alta qualidade, proporciona brilho e elegância aos penteados. Não deixa marcas no cabelo e é super confortável.',
       },
       {
         id: 'a3',
@@ -145,12 +163,14 @@ export const categories = [
         price: 25.00,
         image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Pingente exclusivo que pode ser personalizado com inicial, nome ou data especial. Acabamento premium em banho dourado. Uma maneira única de carregar memórias especiais.',
       },
       {
         id: 'a4',
         name: 'Scrunchie Estampado',
         price: 8.00,
         image: 'https://pixabay.com/get/g0b8af6180cfbc175d9fd0b738398ce2c147aee44ced7d7725ab87fbfdeaf1d2a319070593e6a8cfff75579b376fab21fbde55be6b566bf294f0e404c6ffd8d5b_1280.jpg',
+        description: 'Scrunchie com estampa exclusiva e alegre, confeccionado em tecido macio que não danifica os fios. Elástico resistente e durável, perfeito para todos os tipos de cabelo.',
       },
       {
         id: 'a5',
@@ -158,12 +178,14 @@ export const categories = [
         price: 22.00,
         image: 'https://images.unsplash.com/photo-1611085583191-a3b181a88401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Broche artesanal decorado com pedrarias brilhantes, cada peça é única. Feito à mão com muito cuidado e atenção aos detalhes. Adiciona um toque de brilho a qualquer look.',
       },
       {
         id: 'a6',
         name: 'Tiara com Flores',
         price: 35.00,
         image: 'https://images.unsplash.com/photo-1583743089695-4b816a340f82?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Tiara delicada decorada com flores artesanais em tecido nobre. Design romântico e atemporal, perfeita para ocasiões especiais. Confortável para uso prolongado.',
       },
       {
         id: 'a7',
@@ -171,6 +193,7 @@ export const categories = [
         price: 18.00,
         image: 'https://images.unsplash.com/photo-1596385791964-2b3f0fc52d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Nova presilha com acabamento dourado elegante, design minimalista e moderno. Firme e durável, mantém o penteado no lugar com estilo. Ideal para todas as ocasiões.',
       },
       {
         id: 'a8',
@@ -178,12 +201,14 @@ export const categories = [
         price: 30.00,
         image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Feito à mão',
+        description: 'Anel feito à mão com design exclusivo e contemporâneo. Cada peça é única, criada com materiais de qualidade e muito amor. Ajustável para maior conforto.',
       },
       {
         id: 'a9',
         name: 'Brinco Pendente',
         price: 28.00,
         image: 'https://images.unsplash.com/photo-1635767779984-a02c9ee6ecdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
+        description: 'Brinco pendente elegante com design moderno e leve. Acabamento premium que não escurece, confortável para uso diário. Complemento perfeito para qualquer visual.',
       },
       {
         id: 'a10',
@@ -191,6 +216,7 @@ export const categories = [
         price: 16.00,
         image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600',
         tag: 'Novo',
+        description: 'Nova pulseira em tecido com estampa exclusiva e fechamento ajustável. Material macio e resistente, confortável para uso diário. Mix de cores vibrantes para alegrar seu look.',
       },
     ],
   },
