@@ -19,7 +19,7 @@ function CategoryRow({ category }) {
 
   return (
     <section className="category-section" data-testid={`category-section-${category.id}`}>
-      <div className="category-header">
+      <div className="category-header-layout">
         <div>
           <h2 className="category-title" data-testid={`category-title-${category.id}`}>
             {category.name}

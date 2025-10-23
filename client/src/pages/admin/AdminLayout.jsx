@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function AdminLayout({ children }) {
   return (
     <div className="admin-page container">
-      <header className="category-header">
+      <header className="category-header-layout">
         <div>
           <h1 className="category-title">Administração</h1>
           <p className="category-description">Gerencie produtos e categorias da loja</p>

@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../../context/ProductContext";
 import { useState } from "react";
 import ProductViewModal from "../../components/ProductViewModal";
+import { Button } from "../../components/ui/button";
+import { ChevronLeft } from "lucide-react";
 
 export default function AdminProducts() {
   const { products, deleteProduct } = useProducts();
@@ -11,17 +13,43 @@ export default function AdminProducts() {
   return (
     <div className="main-content">
       <div className="category-header">
-        <div>
-          <h2 className="category-title">Produtos</h2>
-          <p className="category-description">Gerencie o catálogo de produtos</p>
-        </div>
 
-        <button 
-          className="view-more-btn" 
-          onClick={() => navigate("/admin/produtos/novo")}
-        >
-          Novo produto
-        </button>
+        <div className="back-to-dash">
+          <div className="mb-6">
+            <Button
+              onClick={() => navigate('/admin')}
+              className="btn outline"
+              aria-label="Voltar ao painel"
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <ChevronLeft style={{ width: 16, height: 16 }} />
+                <span>Voltar ao Painel</span>
+              </span>
+            </Button>
+          </div>
+        </div>
+        <div className="header-description">
+          
+          <div>
+            <h2 className="category-title">Produtos</h2>
+            <p className="category-description">Gerencie o catálogo de produtos</p>
+          </div>
+
+          <div className="btns-products">
+            <button
+              className="view-more-btn-new-product"
+              onClick={() => navigate("/admin/categorias")}
+            >
+              Nova categoria
+            </button>
+            <button
+              className="view-more-btn-new-product"
+              onClick={() => navigate("/admin/produtos/novo")}
+            >
+              Novo produto
+            </button>
+          </div>
+        </div>
       </div>
 
       {products.length === 0 ? (
@@ -38,14 +66,14 @@ export default function AdminProducts() {
                 <span className="product-price">R$ {p.price?.toFixed(2)}</span>
               </div>
               <div className="card-actions">
-                <button 
+                <button
                   className="view-more-btn full-width"
                   onClick={() => setSelectedProduct(p)}
                 >
                   Ver detalhes
                 </button>
-                <Link 
-                  to={`/admin/produtos/${p.id}/editar`} 
+                <Link
+                  to={`/admin/produtos/${p.id}/editar`}
                   className="order-btn"
                 >
                   Editar
@@ -63,11 +91,11 @@ export default function AdminProducts() {
           ))}
         </div>
       )}
-      
+
       {selectedProduct && (
-        <ProductViewModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
+        <ProductViewModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
         />
       )}
     </div>

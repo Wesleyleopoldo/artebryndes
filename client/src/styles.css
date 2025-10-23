@@ -186,6 +186,26 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.category-header-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.header-description {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.back-to-dash {
+  width: 100%;
 }
 
 .category-title {
@@ -198,6 +218,24 @@ body {
   color: var(--muted);
   font-size: 1rem;
   margin-top: 0.25rem;
+}
+
+.view-more-btn-new-product {
+  background: var(--bronze);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  height: 2.5rem;
+  border: none;
+}
+
+.btns-products {
+  display: flex;
+  width: 30%;
+  gap: 10px;
 }
 
 .view-more-btn {
@@ -375,7 +413,6 @@ body {
   color: white;
   padding: 2rem 0;
   text-align: center;
-  margin-top: 4rem;
 }
 
 .footer-content {
@@ -486,6 +523,8 @@ button:focus {
   /* fundo claro tipo gray-50 */
   padding: 2rem;
   box-sizing: border-box;
+
+  flex: 1;
 }
 
 /* Sub-container para controlar o alinhamento do card */
@@ -765,8 +804,10 @@ button:focus {
 
 .admin-page {
   max-width: 1200px;
+  flex: 1;
   margin: 2rem auto;
   padding: 1rem;
+  width: 100%;
 }
 
 .admin-header {
@@ -872,6 +913,108 @@ button:focus {
 .simple-table tbody tr:hover td {
   background: linear-gradient(90deg, rgba(250,245,244,0.5), transparent);
 }
+
+/* Admin Users specific styling */
+.admin-users .rounded-md.border {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-users table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.admin-users th,
+.admin-users td {
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+.admin-users thead th {
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+}
+
+.admin-users tbody tr {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.admin-users tbody tr td {
+  border: none;
+}
+
+.admin-users .table-actions {
+  gap: 0.5rem;
+}
+
+.admin-users .table-actions .btn {
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.admin-users .table-actions .btn:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.admin-users .table-actions .btn[disabled] {
+  opacity: 0.6;
+}
+
+/* Icon-style buttons inside admin tables (consistent with site buttons) */
+.admin-users .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.04);
+  cursor: pointer;
+}
+
+.admin-users .icon-btn:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+/* Admin header adjustments */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-users .text-sm.text-muted {
+  margin-top: 0.25rem;
+}
+
+/* Admin Users specific form tweaks */
+.admin-users .table-cell-strong {
+  font-weight: 700;
+}
+
+.admin-users .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.admin-users .form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+
+
 
 /* Table action buttons spacing */
 .table-actions {
@@ -1284,4 +1427,21 @@ button:focus {
   .products-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.new-user {
+  background: var(--rose);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 30%;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  transition: background 0.3s ease;
+
+  margin-top: 15px auto;
 }

@@ -74,7 +74,7 @@ export default function AdminProfile() {
         <div style={{ marginBottom: '1.5rem' }}>
           <button 
             className="btn outline"
-            onClick={() => navigate('/_adm/portal')}
+            onClick={() => navigate('/admin')}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
           >
             <ChevronLeft size={18} />
