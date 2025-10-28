@@ -21,6 +21,11 @@ export default function AdminHome() {
           <h3>Visualizar minhas informações</h3>
           <p>Editar seus dados de perfil e preferências.</p>
         </Link>
+
+        <Link to="/_adm/portal/entrar" className="admin-card">
+          <h3>Sair do Painel Administrativo</h3>
+          <p>Voltar para a página de login do administrador.</p>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE = 'http://localhost:5353';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -15,7 +16,13 @@ export function AuthProvider({ children }) {
   const checkSession = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/session', { method: 'GET', credentials: 'include' });
+      const res = await fetch(`${API_BASE}/api/auth/session`, { 
+        method: 'GET', 
+        credentials: 'include',
+        headers: {
+          'Origin': window.location.origin
+        }
+      });
       if (res.ok) {
         const body = await res.json();
         setIsAuthenticated(true);
@@ -39,16 +46,20 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     // credentials: { username, password }
-    const res = await fetch('/api/admin/login', {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin
+      },
       body: JSON.stringify(credentials),
     });
     if (res.ok) {
       const body = await res.json();
       setIsAuthenticated(true);
       setUser(body.user ?? null);
+      navigate('/admin'); // Redireciona para a home administrativa após login
       return { ok: true, body };
     }
     const err = await res.json().catch(() => ({ message: 'Erro ao autenticar' }));
@@ -57,7 +68,13 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+      await fetch(`${API_BASE}/api/auth/logout`, { 
+        method: 'POST', 
+        credentials: 'include',
+        headers: {
+          'Origin': window.location.origin
+        }
+      });
     } catch (e) {}
     setIsAuthenticated(false);
     setUser(null);
@@ -66,10 +83,13 @@ export function AuthProvider({ children }) {
 
   const signup = async (payload) => {
     // Only callable when authenticated (per your requirement). Backend should verify session.
-    const res = await fetch('/api/admin/signup', {
+    const res = await fetch(`${API_BASE}/api/auth/signup`, {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin
+      },
       body: JSON.stringify(payload),
     });
     if (res.ok) return { ok: true };

@@ -168,6 +168,7 @@ body {
   margin: 0 auto;
   padding: 3rem 1rem;
   flex: 1;
+  flex-wrap: wrap;
 }
 
 .home-page {
@@ -860,6 +861,9 @@ button:focus {
 /* Admin card used on AdminHome */
 .admin-card {
   display: block;
+  height: 125px;
+  width: 370px;
+
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
