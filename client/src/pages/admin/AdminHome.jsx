@@ -6,7 +6,7 @@ export default function AdminHome() {
       <h2>Área do Administrador</h2>
       <p>Escolha uma ação:</p>
 
-      <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', marginTop: 16 }}>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 16 }}>
         <Link to="/admin/produtos" className="admin-card">
           <h3>Gerenciar Produtos</h3>
           <p>Adicionar, editar ou remover produtos da loja.</p>
