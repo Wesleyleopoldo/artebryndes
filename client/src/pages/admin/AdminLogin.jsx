@@ -15,10 +15,11 @@ export default function AdminLogin() {
     e.preventDefault();
     setError(null);
     const res = await login(form);
-    if (res.ok) {
-      navigate('/admin/produtos');
+    if (res.ok && res.body.id) { // Verifica se temos o id do usuário
+      // Após login bem sucedido, redireciona para MFA com userId
+      navigate(`/_adm/portal/mfa?userId=${res.body.id}`);
     } else {
-      setError(res.error?.message || 'Falha ao entrar');
+      setError(res.error?.message || res.body?.message || 'Falha ao entrar');
     }
   };
 

@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   const checkSession = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/auth/session`, { 
+      const res = await fetch(`${API_BASE}/api/admin/session`, { 
         method: 'GET', 
         credentials: 'include',
         headers: {
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     // credentials: { username, password }
-    const res = await fetch(`${API_BASE}/api/auth/login`, {
+    const res = await fetch(`${API_BASE}/api/admin/login`, {
       method: 'POST',
       credentials: 'include',
       headers: { 
@@ -57,9 +57,8 @@ export function AuthProvider({ children }) {
     });
     if (res.ok) {
       const body = await res.json();
-      setIsAuthenticated(true);
-      setUser(body.user ?? null);
-      navigate('/admin'); // Redireciona para a home administrativa após login
+      console.log('Login response:', body); // Debug para ver o que retorna
+      // Não seta autenticado ainda - aguarda MFA
       return { ok: true, body };
     }
     const err = await res.json().catch(() => ({ message: 'Erro ao autenticar' }));
@@ -68,7 +67,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await fetch(`${API_BASE}/api/auth/logout`, { 
+      await fetch(`${API_BASE}/api/admin/logout`, { 
         method: 'POST', 
         credentials: 'include',
         headers: {
@@ -81,9 +80,30 @@ export function AuthProvider({ children }) {
     navigate('/_adm/portal/entrar');
   };
 
+  const validateMfa = async (userId, code) => {
+        const res = await fetch(`${API_BASE}/api/auth/mfa/${userId}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin
+      },
+      body: JSON.stringify({ code }),
+    });
+    if (res.ok) {
+      const body = await res.json();
+      setIsAuthenticated(true);
+      setUser(body.user ?? null);
+      navigate('/admin'); // Só redireciona para home após MFA
+      return { ok: true, body };
+    }
+    const err = await res.json().catch(() => ({ message: 'Erro na validação MFA' }));
+    return { ok: false, error: err };
+  };
+
   const signup = async (payload) => {
     // Only callable when authenticated (per your requirement). Backend should verify session.
-    const res = await fetch(`${API_BASE}/api/auth/signup`, {
+    const res = await fetch(`${API_BASE}/api/admin/signup`, {
       method: 'POST',
       credentials: 'include',
       headers: { 
@@ -98,7 +118,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading, user, checkSession, login, logout, signup }}>
+    <AuthContext.Provider value={{ isAuthenticated, loading, user, checkSession, login, logout, signup, validateMfa }}>
       {children}
     </AuthContext.Provider>
   );

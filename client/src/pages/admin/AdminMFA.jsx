@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
 
+const API_BASE = 'http://localhost:5353';
+
 export default function AdminMFA() {
   const inputsRef = useRef([])
   const [values, setValues] = useState(['', '', '', '', '', ''])
@@ -48,6 +50,15 @@ export default function AdminMFA() {
       setError('Insira o código de 6 dígitos.')
       return
     }
+    
+    const params = new URLSearchParams(location.search);
+    const userId = params.get('userId');
+    
+    if (!userId) {
+      setError('Usuário não identificado. Por favor, faça login novamente.')
+      return
+    }
+    
     setLoading(true)
     try {
       if (preview) {
@@ -55,9 +66,12 @@ export default function AdminMFA() {
         navigate('/admin-open')
         return
       }
-      const res = await fetch('/api/admin/mfa/verify', {
+      const res = await fetch(`${API_BASE}/api/auth/mfa/${userId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Origin': window.location.origin 
+        },
         body: JSON.stringify({ code }),
         credentials: 'include'
       })
@@ -81,8 +95,19 @@ export default function AdminMFA() {
         setMsg('Código reenviado (preview) — verifique seu email administrativo')
         return
       }
-      const res = await fetch('/api/admin/mfa/resend', { 
-        method: 'POST', 
+      const params = new URLSearchParams(location.search);
+      const userId = params.get('userId');
+      
+      if (!userId) {
+        setError('Usuário não identificado. Por favor, faça login novamente.')
+        return
+      }
+      
+      const res = await fetch(`${API_BASE}/api/auth/mfa/${userId}/resend`, { 
+        method: 'POST',
+        headers: {
+          'Origin': window.location.origin
+        },
         credentials: 'include' 
       })
       if (res.ok) setMsg('Código reenviado — verifique seu email administrativo')
