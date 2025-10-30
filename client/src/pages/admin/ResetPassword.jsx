@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -58,7 +59,7 @@ export default function ResetPassword() {
       <div className="auth-page">
         <div className="auth-container">
           <Link to="/_adm" className="auth-logo">
-            <img src="/logo.png" alt="Arte Bryndes" />
+            <img src={logoArteBryndes} alt="Arte Bryndes" />
           </Link>
           
           <div className="auth-card">
@@ -79,7 +80,7 @@ export default function ResetPassword() {
     <div className="auth-page">
       <div className="auth-container">
         <Link to="/_adm" className="auth-logo">
-          <img src="/logo.png" alt="Arte Bryndes" />
+          <img src={logoArteBryndes} alt="Arte Bryndes" />
         </Link>
         
         <div className="auth-card">

@@ -1,21 +1,53 @@
-import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 
+const API_BASE = 'http://localhost:5353';
+
 export default function AdminProfile() {
-  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
   const [form, setForm] = useState({ 
-    name: user?.name || '', 
-    email: user?.email || '',
-    username: user?.username || '' 
+    name: '', 
+    email: '',
+    username: '' 
   });
   const [error, setError] = useState('');
   const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/users/me`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Origin': window.location.origin
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUserData(data);
+        setForm({
+          name: data.name || '',
+          email: data.email || '',
+          username: data.username || ''
+        });
+      } else {
+        setError('Erro ao carregar dados do usuário');
+      }
+    } catch (err) {
+      setError('Erro ao carregar dados do usuário');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const isOpenProfile = location.pathname === '/admin/perfil-open';
 
@@ -23,9 +55,9 @@ export default function AdminProfile() {
 
   const startEdit = () => {
     setForm({ 
-      name: user?.name || '', 
-      email: user?.email || '',
-      username: user?.username || '' 
+      name: userData?.name || '', 
+      email: userData?.email || '',
+      username: userData?.username || '' 
     });
     setEditing(true);
     setError('');
@@ -45,18 +77,25 @@ export default function AdminProfile() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/admin/profile', {
+      const res = await fetch(`${API_BASE}/api/users/me/profile`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Origin': window.location.origin
+        },
         credentials: 'include',
-        body: JSON.stringify(form)
+        body: JSON.stringify({
+          name: form.name,
+          username: form.username,
+          email: form.email
+        })
       });
 
       if (res.ok) {
+        const updatedData = await res.json();
+        setUserData(updatedData);
         setMsg('Alterações salvas com sucesso!');
         setEditing(false);
-        // Recarrega os dados do usuário no contexto
-        await useAuth().checkSession();
       } else {
         const body = await res.json().catch(() => ({}));
         setError(body.message || 'Erro ao salvar alterações');
@@ -88,19 +127,21 @@ export default function AdminProfile() {
         {error && <div className="auth-error">{error}</div>}
         {msg && <div style={{ background: '#ecfdf5', color: '#065f46', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem' }}>{msg}</div>}
         
-        {!editing ? (
+        {loading ? (
+          <div>Carregando...</div>
+        ) : !editing ? (
           <div className="admin-form">
             <div className="auth-input-group">
               <label>Nome</label>
-              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{user?.name}</p>
+              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{userData?.name}</p>
             </div>
             <div className="auth-input-group">
               <label>Usuário</label>
-              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{user?.username}</p>
+              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{userData?.username}</p>
             </div>
             <div className="auth-input-group">
               <label>Email</label>
-              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{user?.email}</p>
+              <p style={{ padding: '0.75rem', background: 'var(--bg)', borderRadius: '8px' }}>{userData?.email}</p>
             </div>
             <div style={{ marginTop: '1rem' }}>
               <button onClick={startEdit} className="btn primary" style={{ width: '100%' }}>

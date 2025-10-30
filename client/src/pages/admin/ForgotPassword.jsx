@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -36,8 +37,8 @@ export default function ForgotPassword() {
     return (
       <div className="auth-page">
         <div className="auth-container">
-          <Link to="/_adm" className="auth-logo">
-            <img src="/logo.png" alt="Arte Bryndes" />
+          <Link to="/admin" className="auth-logo">
+            <img src={logoArteBryndes} alt="Arte Bryndes" />
           </Link>
           
           <div className="auth-card">
@@ -57,8 +58,8 @@ export default function ForgotPassword() {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <Link to="/_adm" className="auth-logo">
-          <img src="/logo.png" alt="Arte Bryndes" />
+        <Link to="/admin" className="auth-logo">
+          <img src={logoArteBryndes} alt="Arte Bryndes" />
         </Link>
         
         <div className="auth-card">

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export default function AdminHome() {
+  const { logout } = useAuth();
   return (
     <div className="main-content">
       <h2>Área do Administrador</h2>
@@ -22,10 +24,10 @@ export default function AdminHome() {
           <p>Editar seus dados de perfil e preferências.</p>
         </Link>
 
-        <Link to="/_adm/portal/entrar" className="admin-card">
+        <button onClick={logout} className="admin-card" style={{ width: '100%', textAlign: 'left', border: 'none', cursor: 'pointer' }}>
           <h3>Sair do Painel Administrativo</h3>
           <p>Voltar para a página de login do administrador.</p>
-        </Link>
+        </button>
       </div>
     </div>
   );
