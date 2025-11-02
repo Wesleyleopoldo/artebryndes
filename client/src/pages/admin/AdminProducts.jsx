@@ -10,6 +10,11 @@ export default function AdminProducts() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const formatPrice = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n.toFixed(2) : '';
+  };
+
   return (
     <div className="main-content">
       <div className="category-header">
@@ -63,7 +68,7 @@ export default function AdminProducts() {
               <h3 className="product-name">{p.name}</h3>
               <div className="product-meta">
                 <span className="muted">{p.categoryName || '—'}</span>
-                <span className="product-price">R$ {p.price?.toFixed(2)}</span>
+                <span className="product-price">R$ {formatPrice(p.price)}</span>
               </div>
               <div className="card-actions">
                 <button

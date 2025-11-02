@@ -131,12 +131,12 @@ export default function AdminSignup() {
  
              <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
                <button type="submit" className="auth-submit">Criar</button>
-               <Link to="/admin-open" className="text-bronze" style={{ alignSelf: 'center', paddingLeft: 8 }}>Cancelar</Link>
+               <Link to="/admin" className="text-bronze" style={{ alignSelf: 'center', paddingLeft: 8 }}>Cancelar</Link>
              </div>
            </form>
  
            <p className="mt-4 text-sm text-muted">
-             Voltar para o painel: <Link to="/admin-open" className="text-bronze hover:underline">Painel Admin (preview)</Link>
+             Voltar para o painel: <Link to="/admin" className="text-bronze hover:underline">Painel Admin (preview)</Link>
            </p>
          </div>
        </div>

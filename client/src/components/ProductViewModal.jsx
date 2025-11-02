@@ -1,6 +1,11 @@
 export default function ProductViewModal({ product, onClose }) {
   if (!product) return null;
 
+  const formatPrice = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n.toFixed(2) : '';
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -16,7 +21,7 @@ export default function ProductViewModal({ product, onClose }) {
               <h2>{product.name}</h2>
               {product.tag && <span className="modal-product-tag">{product.tag}</span>}
             </div>
-            <div className="modal-price">R$ {product.price?.toFixed(2)}</div>
+            <div className="modal-price">R$ {formatPrice(product.price)}</div>
             
             <div className="modal-meta">
               <span className="muted">{product.categoryName}</span>
