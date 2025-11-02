@@ -231,6 +231,12 @@ body {
   transition: background 0.3s ease;
   height: 2.5rem;
   border: none;
+  cursor: pointer;
+}
+
+.view-more-btn-new-product:hover {
+  background: var(--bronze-dark);
+  color: white;
 }
 
 .btns-products {
@@ -1448,4 +1454,133 @@ button:focus {
   transition: background 0.3s ease;
 
   margin-top: 15px auto;
+}
+
+/* Estilos para o modal de edição */
+.edit-modal {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--bronze);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--bronze);
+  box-shadow: 0 0 0 3px rgba(173, 110, 95, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.modal-actions button {
+  min-width: 100px;
+  padding: 0.75rem 1.25rem;
+}
+
+/* Wider auth container variant for admin signup page */
+.auth-container--wide {
+  max-width: 1000px; /* permite o cartão ficar mais largo */
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Variant for the auth card when we want a wider form */
+.auth-card--wide {
+  max-width: 900px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* Make auth form fields use full available width and improve select styling */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* Ensure selects look consistent with inputs and show a custom arrow */
+select.auth-input,
+.auth-input[type="select"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+/* Slight visual tweak for option elements where supported */
+select.auth-input option {
+  padding: 8px;
+}
+
+/* Increase input/select height/spacing for wider card */
+.auth-input {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+/* Keep form centered inside the card */
+.auth-card {
+  display: block;
+  box-sizing: border-box;
+}
+
+/* small responsive tweak to avoid overflowing on narrow screens */
+@media (max-width: 640px) {
+  .auth-card--wide {
+    max-width: 100%;
+    width: 100%;
+    padding: 1rem;
+  }
 }

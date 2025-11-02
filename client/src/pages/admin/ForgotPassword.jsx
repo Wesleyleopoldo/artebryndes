@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
+import './auth.css';
+
+const API_BASE = 'http://localhost:5353';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,16 +17,41 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      const res = await fetch('/api/admin/auth/forgot-password', {
+      const res = await fetch(`${API_BASE}/api/recovery-codes/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email })
       });
 
       if (res.ok) {
-        setSuccess(true);
+        // Ler corpo sem tentar consumir duas vezes
+        let id = '';
+        const ct = (res.headers.get('content-type') || '').toLowerCase();
+        if (ct.includes('application/json')) {
+          const json = await res.json().catch(() => ({}));
+          id = json?.userId || json?.id || '';
+        } else {
+          const text = await res.text().catch(() => '');
+          // tentar extrair JSON de texto, ou usar texto puro
+          try {
+            const json = JSON.parse(text);
+            id = json?.userId || json?.id || text.trim();
+          } catch {
+            id = text.trim();
+          }
+        }
+
+        if (id) {
+          navigate(`/_adm/portal/recovery-code?userId=${encodeURIComponent(id)}`);
+        } else {
+          setError('Resposta inesperada do servidor.');
+        }
+      } else if (res.status === 404) {
+        setError('Usuário não encontrado.');
       } else {
-        const data = await res.json();
+        // tentar ler json de erro
+        const data = await res.json().catch(() => ({}));
         setError(data.message || 'Erro ao enviar email de recuperação');
       }
     } catch (err) {
@@ -33,44 +61,20 @@ export default function ForgotPassword() {
     }
   };
 
-  if (success) {
-    return (
-      <div className="auth-page">
-        <div className="auth-container">
-          <Link to="/admin" className="auth-logo">
-            <img src={logoArteBryndes} alt="Arte Bryndes" />
-          </Link>
-          
-          <div className="auth-card">
-            <h1>Email Enviado!</h1>
-            <p className="auth-subtitle">
-              Se existe uma conta associada ao email informado, você receberá instruções para redefinir sua senha.
-            </p>
-            <Link to="/_adm" className="auth-submit">
-              Voltar ao Login
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <Link to="/admin" className="auth-logo">
+        <div className="auth-logo">
           <img src={logoArteBryndes} alt="Arte Bryndes" />
-        </Link>
-        
+        </div>
+
         <div className="auth-card">
           <h1>Recuperar Senha</h1>
           <p className="auth-subtitle">
-            Digite seu email para receber instruções de recuperação de senha
+            Digite seu email para receber o código de recuperação.
           </p>
 
-          {error && (
-            <div className="auth-error">{error}</div>
-          )}
+          {error && <div className="auth-error">{error}</div>}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="auth-input-group">
@@ -85,8 +89,8 @@ export default function ForgotPassword() {
               />
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="auth-submit"
               disabled={loading}
             >
@@ -94,9 +98,9 @@ export default function ForgotPassword() {
             </button>
 
             <p className="text-sm text-muted" style={{ marginTop: '1rem', textAlign: 'center' }}>
-              <Link to="/_adm" className="text-bronze underline">
+              <button type="button" onClick={() => navigate('/_adm/portal/entrar')} className="auth-link">
                 Voltar ao Login
-              </Link>
+              </button>
             </p>
           </form>
         </div>

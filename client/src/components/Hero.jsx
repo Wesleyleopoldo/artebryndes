@@ -1,6 +1,6 @@
 function Hero({ background, title, subtitle }) {
   const heroStyle = {
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../assets/background-image-hero.png')`
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${background}')`
   };
 
   return (

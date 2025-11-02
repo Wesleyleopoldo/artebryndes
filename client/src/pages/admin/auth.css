@@ -1,0 +1,106 @@
+/* Styles simples locais (não Tailwind) para a área de autenticação */
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  min-height: 80vh;
+  background: #f7f7f7;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.auth-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.auth-card h1 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+}
+
+.auth-subtitle {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.auth-error {
+  background: #ffecec;
+  color: #b00020;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: block;
+}
+
+.auth-input-group {
+  margin-bottom: 12px;
+}
+
+.auth-input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #b07a56;
+  box-shadow: 0 0 0 3px rgba(176,122,86,0.08);
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 10px 14px;
+  background: #b07a56; /* bronze-like */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-submit[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-link {
+  background: none;
+  border: none;
+  color: #b07a56;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.95rem;
+}

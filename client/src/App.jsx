@@ -17,6 +17,7 @@ import AdminSignup from "./pages/admin/AdminSignup";
 import AdminMFA from "./pages/admin/AdminMFA";
 import ForgotPassword from "./pages/admin/ForgotPassword";
 import ResetPassword from "./pages/admin/ResetPassword";
+import RecoveryCode from "./pages/admin/RecoveryCode";
 import DevLinks from "./pages/admin/DevLinks";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -26,9 +27,10 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          {/* Rotas de autenticação - sem header/footer */}
+          {/* Rotas de autenticação - sem header/footer */} 
           <Route path="/_adm/portal/entrar" element={<AdminLogin />} />
           <Route path="/_adm/portal/esqueci-senha" element={<ForgotPassword />} />
+          <Route path="/_adm/portal/recovery-code" element={<RecoveryCode />} />
           <Route path="/_adm/portal/redefinir-senha" element={<ResetPassword />} />
           <Route path="/_adm/dev-links" element={<DevLinks />} />
           {/* Rotas de autenticação - sem header/footer */}

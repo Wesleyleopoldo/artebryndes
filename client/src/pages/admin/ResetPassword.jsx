@@ -1,134 +1,124 @@
-import { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
 
+const API_BASE = 'http://localhost:5353';
+
 export default function ResetPassword() {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const token = searchParams.get('token');
-  const [form, setForm] = useState({ password: '', confirmPassword: '' });
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [msg, setMsg] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const userId = params.get('userId');
+  const redirectRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (redirectRef.current) clearTimeout(redirectRef.current);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      setError('As senhas não conferem');
+    setError('');
+    setMsg('');
+    if (!userId) {
+      setError('Usuário não identificado. Volte e solicite um novo código.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Senha deve ter pelo menos 6 caracteres.');
+      return;
+    }
+    if (password !== confirm) {
+      setError('As senhas não coincidem.');
       return;
     }
 
     setLoading(true);
-    setError('');
-
     try {
-      const res = await fetch('/api/admin/auth/reset-password', {
+      const res = await fetch(`${API_BASE}/api/especial-router/password/${encodeURIComponent(userId)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          token,
-          password: form.password
-        })
+        credentials: 'include',
+        body: JSON.stringify({ newPassword: password })
       });
 
       if (res.ok) {
-        // Sucesso, redireciona para login
-        navigate('/_adm', { 
-          state: { message: 'Senha alterada com sucesso! Faça login com sua nova senha.' }
-        });
+        setMsg('Senha atualizada com sucesso. Redirecionando para o login...');
+        setLoading(false);
+        redirectRef.current = setTimeout(() => {
+          navigate('/_adm/portal/entrar', { replace: true });
+        }, 1400);
+      } else if (res.status === 403) {
+        setError('Redefinição de senha não aprovada.');
+      } else if (res.status === 404) {
+        setError('Usuário não encontrado.');
       } else {
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         setError(data.message || 'Erro ao redefinir senha');
       }
     } catch (err) {
       setError('Erro ao redefinir senha');
     } finally {
-      setLoading(false);
+      if (!redirectRef.current) setLoading(false);
     }
   };
-
-  const handleChange = (e) => {
-    setForm(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  // Se não tiver token, mostra erro
-  if (!token) {
-    return (
-      <div className="auth-page">
-        <div className="auth-container">
-          <Link to="/_adm" className="auth-logo">
-            <img src={logoArteBryndes} alt="Arte Bryndes" />
-          </Link>
-          
-          <div className="auth-card">
-            <h1>Link Inválido</h1>
-            <p className="auth-subtitle">
-              Este link de recuperação é inválido ou já expirou.
-            </p>
-            <Link to="/_adm" className="auth-submit">
-              Voltar ao Login
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <Link to="/_adm" className="auth-logo">
+        <div className="auth-logo">
           <img src={logoArteBryndes} alt="Arte Bryndes" />
-        </Link>
-        
+        </div>
+
         <div className="auth-card">
           <h1>Redefinir Senha</h1>
           <p className="auth-subtitle">
-            Digite sua nova senha
+            Escolha uma nova senha para sua conta.
           </p>
 
-          {error && (
-            <div className="auth-error">{error}</div>
-          )}
+          {error && <div className="auth-error">{error}</div>}
+          {msg && <div style={{ color: 'green', marginBottom: 12 }}>{msg}</div>}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="auth-input-group">
               <label htmlFor="password">Nova Senha</label>
               <input
-                type="password"
                 id="password"
-                name="password"
+                type="password"
                 className="auth-input"
-                value={form.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
-                minLength={6}
               />
             </div>
 
             <div className="auth-input-group">
-              <label htmlFor="confirmPassword">Confirme a Nova Senha</label>
+              <label htmlFor="confirm">Confirmar Senha</label>
               <input
+                id="confirm"
                 type="password"
-                id="confirmPassword"
-                name="confirmPassword"
                 className="auth-input"
-                value={form.confirmPassword}
-                onChange={handleChange}
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
                 required
-                minLength={6}
               />
             </div>
 
-            <button 
-              type="submit" 
-              className="auth-submit"
-              disabled={loading}
-            >
-              {loading ? 'Alterando...' : 'Alterar Senha'}
+            <button type="submit" className="auth-submit" disabled={loading}>
+              {loading ? 'Salvando...' : 'Redefinir Senha'}
             </button>
+
+            <p className="text-sm text-muted" style={{ marginTop: '1rem', textAlign: 'center' }}>
+              <button type="button" onClick={() => navigate('/_adm/portal/entrar')} className="text-bronze underline btn link">
+                Voltar ao Login
+              </button>
+            </p>
           </form>
         </div>
       </div>

@@ -11,12 +11,12 @@ function Header() {
         </Link>
         <nav className="nav-links">
 
+          <Link to="/" data-testid="nav-home" className="inicio-nav-btn no-focus-outline">Início</Link>
+
           <Link to="/carrinho" className="inicio-nav-btn no-focus-outline">
             Carrinho
           </Link>
 
-
-          <Link to="/" data-testid="nav-home" className="inicio-nav-btn no-focus-outline">Início</Link>
           <a
             href={SITE.instagram}
             target="_blank"
