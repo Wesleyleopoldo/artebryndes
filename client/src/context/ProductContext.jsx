@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { categories as seedCategories } from "../data/products";
+import { fetchWithAuthForm } from "../lib/fetchWithAuthForm"; // Add this import
+const API_BASE = 'http://localhost:5353'; // Adicione a URL base da API
 
 const ProductContext = createContext();
 
@@ -81,12 +83,73 @@ export function ProductProvider({ children }) {
     return newProduct;
   };
 
-  const updateProduct = (id, updates) => {
-    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
+  const updateProduct = async (id, updates) => {
+    try {
+      // Create FormData and append fields
+      const fd = new FormData();
+      fd.append('name', updates.name);
+      fd.append('price', parseFloat(updates.price || 0));
+      fd.append('description', updates.description || '');
+      fd.append('tag', updates.tag || '');
+      fd.append('categoryId', updates.categoryId || '');
+
+      // If there's a new image file, append it
+      if (updates.image instanceof File) {
+        fd.append('image', updates.image);
+      }
+
+      const res = await fetchWithAuthForm(`${API_BASE}/api/products/${id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: fd
+      });
+
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error('Produto não encontrado');
+        }
+        throw new Error('Erro ao atualizar produto');
+      }
+
+      const updatedProduct = await res.json();
+
+      // Update state with returned data
+      setProducts(prev => prev.map(p => 
+        p.id === id ? { ...p, ...updatedProduct } : p
+      ));
+
+      return updatedProduct;
+
+    } catch (err) {
+      console.error('Erro ao atualizar produto:', err);
+      alert(err.message || 'Erro ao atualizar produto');
+      throw err; // Re-throw to handle in component
+    }
   };
 
-  const deleteProduct = (id) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
+  const deleteProduct = async (id) => {
+    try {
+      const res = await fetchWithAuth(`${API_BASE}/api/products/${id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error('Produto não encontrado');
+        }
+        throw new Error('Erro ao excluir produto');
+      }
+
+      // Atualiza o estado removendo o produto
+      setProducts(prev => prev.filter(p => p.id !== id));
+      return true;
+
+    } catch (err) {
+      console.error('Erro ao deletar produto:', err);
+      alert(err.message || 'Erro ao excluir produto');
+      return false;
+    }
   };
 
   const getProduct = (id) => products.find((p) => p.id === id);

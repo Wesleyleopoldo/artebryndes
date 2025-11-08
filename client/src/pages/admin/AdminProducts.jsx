@@ -9,6 +9,24 @@ export default function AdminProducts() {
   const { products, deleteProduct } = useProducts();
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async (product) => {
+    if (!confirm(`Excluir produto "${product.name}"?`)) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const success = await deleteProduct(product.id);
+      if (success) {
+        // Produto já foi removido do estado pelo contexto
+        setSelectedProduct(null); // Fecha o modal se estiver aberto
+      }
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const formatPrice = (v) => {
     const n = Number(v);
@@ -85,11 +103,10 @@ export default function AdminProducts() {
                 </Link>
                 <button
                   className="btn danger full-width"
-                  onClick={() => {
-                    if (confirm(`Excluir produto "${p.name}"?`)) deleteProduct(p.id);
-                  }}
+                  onClick={() => handleDelete(p)}
+                  disabled={isDeleting}
                 >
-                  Excluir
+                  {isDeleting ? 'Excluindo...' : 'Excluir'}
                 </button>
               </div>
             </div>
