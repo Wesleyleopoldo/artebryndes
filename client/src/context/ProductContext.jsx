@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { categories as seedCategories } from "../data/products";
-import { fetchWithAuthForm } from "../lib/fetchWithAuthForm"; // Add this import
-const API_BASE = 'http://localhost:5353'; // Adicione a URL base da API
+import { fetchWithAuthForm } from "../lib/fetchWithAuthForm";
+import { fetchWithAuth } from "../lib/fetchWithAuth";
 
+const API_BASE = 'http://localhost:5353';
 const ProductContext = createContext();
 
 function flattenCategories(categories) {
@@ -12,54 +12,44 @@ function flattenCategories(categories) {
 }
 
 export function ProductProvider({ children }) {
-  const [products, setProducts] = useState(() => {
-    try {
-      const stored = localStorage.getItem("products_admin");
-      const seedFlat = flattenCategories(seedCategories);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          // merge each stored product with seed product (seed provides missing fields)
-          return parsed.map((p) => {
-            const seedMatch = seedFlat.find((s) => s.id === p.id) || {};
-            return { ...seedMatch, ...p };
-          });
-        } catch (e) {
-          // fall back to raw stored if parse fails
-          return JSON.parse(stored);
-        }
-      }
-    } catch (e) {
-      // ignore parse errors
-    }
-    return flattenCategories(seedCategories);
-  });
+  const [products, setProducts] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // initialize tags from localStorage or from seed data
-  const seedTags = (() => {
-    try {
-      const all = flattenCategories(seedCategories).map((p) => p.tag).filter(Boolean);
-      return Array.from(new Set(all));
-    } catch (e) {
-      return [];
-    }
-  })();
-
-  const [tags, setTags] = useState(() => {
-    try {
-      const stored = localStorage.getItem("product_tags");
-      if (stored) return JSON.parse(stored);
-    } catch (e) {}
-    return seedTags;
-  });
-
+  // Carregar produtos do servidor
   useEffect(() => {
-    try {
-      localStorage.setItem("product_tags", JSON.stringify(tags));
-    } catch (e) {
-      console.error("Could not persist tags to localStorage", e);
-    }
-  }, [tags]);
+    const fetchProducts = async () => {
+      try {
+        const res = await fetchWithAuth(`${API_BASE}/api/categories`, {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+        if (!res.ok) {
+          throw new Error('Falha ao carregar produtos');
+        }
+
+        const categories = await res.json();
+        
+        // Converter categorias em lista plana de produtos
+        const flatProducts = flattenCategories(categories);
+        
+        // Extrair tags únicas dos produtos
+        const uniqueTags = Array.from(
+          new Set(flatProducts.map(p => p.tag).filter(Boolean))
+        );
+
+        setProducts(flatProducts);
+        setTags(uniqueTags);
+      } catch (err) {
+        console.error('Erro ao carregar produtos:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const createTag = (tag) => {
     const t = (tag || "").trim();
@@ -68,35 +58,52 @@ export function ProductProvider({ children }) {
     return t;
   };
 
-  useEffect(() => {
+  const createProduct = async (product) => {
     try {
-      localStorage.setItem("products_admin", JSON.stringify(products));
-    } catch (e) {
-      console.error("Could not persist products to localStorage", e);
-    }
-  }, [products]);
+      const fd = new FormData();
+      fd.append('name', product.name);
+      fd.append('price', parseFloat(product.price || 0));
+      fd.append('description', product.description || '');
+      fd.append('tag', product.tag || '');
+      fd.append('categoryId', product.categoryId || '');
+      if (product.image instanceof File) {
+        fd.append('image', product.image);
+      }
 
-  const createProduct = (product) => {
-    const id = product.id || `${product.name.toLowerCase().replace(/\s+/g, "-")}-${Date.now().toString(36)}`;
-    const newProduct = { ...product, id };
-    setProducts((prev) => [newProduct, ...prev]);
-    return newProduct;
+      const res = await fetchWithAuthForm(`${API_BASE}/api/products`, {
+        method: 'POST',
+        credentials: 'include',
+        body: fd
+      });
+
+      if (!res.ok) {
+        throw new Error('Erro ao criar produto');
+      }
+
+      const newProduct = await res.json();
+      setProducts(prev => [newProduct, ...prev]);
+      
+      if (newProduct.tag) {
+        createTag(newProduct.tag);
+      }
+
+      return newProduct;
+    } catch (err) {
+      console.error('Erro ao criar produto:', err);
+      throw err;
+    }
   };
 
   const updateProduct = async (id, updates) => {
     try {
-      // Create FormData and append fields
       const fd = new FormData();
-      fd.append('name', updates.name);
-      fd.append('price', parseFloat(updates.price || 0));
-      fd.append('description', updates.description || '');
-      fd.append('tag', updates.tag || '');
-      fd.append('categoryId', updates.categoryId || '');
-
-      // If there's a new image file, append it
-      if (updates.image instanceof File) {
-        fd.append('image', updates.image);
-      }
+      
+      if ('name' in updates) fd.append('name', updates.name);
+      if ('price' in updates) fd.append('price', parseFloat(updates.price || 0));
+      if ('description' in updates) fd.append('description', updates.description || '');
+      if ('tag' in updates) fd.append('tag', updates.tag || '');
+      if ('categoryId' in updates) fd.append('categoryId', updates.categoryId || '');
+      if (updates.image instanceof File) fd.append('image', updates.image);
 
       const res = await fetchWithAuthForm(`${API_BASE}/api/products/${id}`, {
         method: 'PUT',
@@ -106,24 +113,32 @@ export function ProductProvider({ children }) {
 
       if (!res.ok) {
         if (res.status === 404) {
-          throw new Error('Produto não encontrado');
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Produto ou categoria não encontrada');
         }
         throw new Error('Erro ao atualizar produto');
       }
 
       const updatedProduct = await res.json();
 
-      // Update state with returned data
       setProducts(prev => prev.map(p => 
-        p.id === id ? { ...p, ...updatedProduct } : p
+        p.id === id ? {
+          ...p,
+          ...updatedProduct,
+          categoryName: updatedProduct.categoryName || p.categoryName,
+        } : p
       ));
+
+      if (updatedProduct.tag) {
+        createTag(updatedProduct.tag);
+      }
 
       return updatedProduct;
 
     } catch (err) {
       console.error('Erro ao atualizar produto:', err);
       alert(err.message || 'Erro ao atualizar produto');
-      throw err; // Re-throw to handle in component
+      throw err;
     }
   };
 
@@ -141,7 +156,6 @@ export function ProductProvider({ children }) {
         throw new Error('Erro ao excluir produto');
       }
 
-      // Atualiza o estado removendo o produto
       setProducts(prev => prev.filter(p => p.id !== id));
       return true;
 
@@ -155,7 +169,18 @@ export function ProductProvider({ children }) {
   const getProduct = (id) => products.find((p) => p.id === id);
 
   return (
-    <ProductContext.Provider value={{ products, createProduct, updateProduct, deleteProduct, getProduct, tags, createTag }}>
+    <ProductContext.Provider 
+      value={{ 
+        products, 
+        createProduct, 
+        updateProduct, 
+        deleteProduct, 
+        getProduct, 
+        tags, 
+        createTag,
+        loading 
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

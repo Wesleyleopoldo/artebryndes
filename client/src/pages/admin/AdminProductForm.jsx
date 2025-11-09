@@ -105,69 +105,30 @@ export default function AdminProductForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    // basic validation
     if (!form.name) return alert('Nome é obrigatório');
 
     try {
-      const endpoint = existing ? `${API_BASE}/api/products/${encodeURIComponent(existing.id)}` : `${API_BASE}/api/products/`;
-      const method = existing ? 'PUT' : 'POST';
+      // use only context functions which already perform the network request
+      const payload = { 
+        name: form.name,
+        price: form.price,
+        description: form.description,
+        tag: form.tag,
+        categoryId: form.categoryId,
+        // attach file object so context will append it to FormData
+        image: imageFile || undefined
+      };
 
-      const fd = new FormData();
-      fd.append('name', form.name);
-      fd.append('price', String(parseFloat(form.price || 0)));
-      fd.append('description', form.description || '');
-      fd.append('tag', form.tag || '');
-      fd.append('categoryId', form.categoryId || '');
-
-      // if a file was selected, append it as "image" (backend expects file)
-      if (imageFile) {
-        fd.append('image', imageFile);
-      } else if (!existing) {
-        // no file on create: backend may accept absence; if you want a placeholder, handle here
-      }
-
-      const res = await fetchWithAuthForm(endpoint, {
-        method,
-        credentials: 'include',
-        body: fd // do NOT set Content-Type; browser sets multipart boundary
-      });
-
-      if (!res.ok) {
-        const text = await res.text().catch(() => '');
-        let body = {};
-        try { body = text ? JSON.parse(text) : {}; } catch {}
-        const msg = body.message || text || `Erro ${res.status}`;
-        return alert(`Falha ao salvar produto: ${msg}`);
-      }
-
-      // backend may not return JSON (or may echo multipart). Safely parse only when JSON.
-      let saved = null;
-      try {
-        const ct = (res.headers.get('content-type') || '').toLowerCase();
-        if (ct.includes('application/json')) {
-          saved = await res.json().catch(() => null);
-        } else {
-          // fallback: try to read text and parse if possible, otherwise ignore
-          const text = await res.text().catch(() => '');
-          try { saved = text ? JSON.parse(text) : null; } catch { saved = null; }
-        }
-      } catch (err) {
-        console.warn('Could not parse response body as JSON', err);
-        saved = null;
-      }
- 
-      // if you also maintain client-side store via createProduct/updateProduct: update it
       if (existing) {
-        try { updateProduct(existing.id, saved || {}); } catch {}
+        await updateProduct(existing.id, payload);
       } else {
-        try { createProduct(saved || {}); } catch {}
+        await createProduct(payload);
       }
 
       navigate("/admin/produtos");
     } catch (err) {
-      console.error('product save error', err);
-      alert('Erro de rede ao salvar produto');
+      console.error('Erro ao salvar produto:', err);
+      alert(err.message || 'Erro ao salvar produto');
     }
   };
 

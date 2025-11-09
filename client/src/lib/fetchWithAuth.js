@@ -1,38 +1,18 @@
-export async function fetchWithAuth(input, init = {}) {
-  const opts = {
-    credentials: 'include',
-    ...init,
-    headers: { 'Content-Type': 'application/json', ...(init.headers || {}) },
+const API_BASE = import.meta.env.VITE_API_BASE || ''; // configure Vercel env var VITE_API_BASE=https://sua-api.onrender.com
+
+export async function fetchWithAuth(path, opts = {}) {
+  const url = path.startsWith('http') ? path : `${API_BASE}${path}`;
+  const defaultOpts = {
+    credentials: 'include', // envia cookies httpOnly
+    headers: { ...(opts.headers || {}) },
+    ...opts,
   };
-
-  const res = await fetch(input, opts);
-
-  // Se status 401 -> redireciona para login imediatamente
-  if (res.status === 401) {
-    window.location.href = '/_adm/portal/entrar';
-    throw new Error('Unauthorized');
-  }
-
-  // Tentar inspecionar corpo para mensagens de token inválido sem consumir o response original
-  try {
-    const ct = (res.headers.get('content-type') || '').toLowerCase();
-
-    if (ct.includes('application/json')) {
-      const json = await res.clone().json().catch(() => null);
-      if (json && (json.message === 'Token inválido!!' || json.message === 'Token inválido')) {
-        window.location.href = '/_adm/portal/entrar';
-        throw new Error('Unauthorized');
-      }
-    } else {
-      const text = await res.clone().text().catch(() => '');
-      if (text && text.includes('Token inválido')) {
-        window.location.href = '/_adm/portal/entrar';
-        throw new Error('Unauthorized');
-      }
-    }
-  } catch (err) {
-    // no-op: se algo falhar ao inspecionar, não bloquear comportamento normal
-  }
-
-  return res;
+  return fetch(url, defaultOpts);
 }
+
+// helper para enviar FormData (não seta Content-Type)
+export async function fetchWithAuthForm(path, opts = {}) {
+  return fetchWithAuth(path, { ...opts });
+}
+
+export default fetchWithAuth;

@@ -44,14 +44,42 @@ function App() {
             <Route path="/categoria/:slug" element={<CategoryPage />} />
             <Route path="/carrinho" element={<CartPage />} />
 
-            {/* Admin area - UNPROTECTED for testing (remove ProtectedRoute wrapper) */}
-            <Route path="/admin" element={<AdminLayout><AdminHome /></AdminLayout>} />
-            <Route path="/admin/produtos" element={<AdminLayout><AdminProducts /></AdminLayout>} />
-            <Route path="/admin/categorias" element={<AdminLayout><AdminCategories /></AdminLayout>} />
-            <Route path="/admin/produtos/novo" element={<AdminLayout><AdminProductForm /></AdminLayout>} />
-            <Route path="/admin/produtos/:id/editar" element={<AdminLayout><AdminProductForm /></AdminLayout>} />
-            <Route path="/admin/usuarios" element={<AdminLayout><AdminUsers /></AdminLayout>} />
-            <Route path="/admin/perfil" element={<AdminLayout><AdminProfile /></AdminLayout>} />
+            {/* Admin area - protected */}
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminHome /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/produtos" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminProducts /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/categorias" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminCategories /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/produtos/novo" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminProductForm /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/produtos/:id/editar" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminProductForm /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/usuarios" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminUsers /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/perfil" element={
+              <ProtectedRoute>
+                <AdminLayout><AdminProfile /></AdminLayout>
+              </ProtectedRoute>
+            } />
 
             <Route path="*" element={<NotFound />} />
           </Route>

@@ -370,6 +370,15 @@ body {
   margin-top: auto;
 }
 
+.product-price-adm {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: #c59d5f;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .order-btn {
   background: var(--rose);
   color: white;
@@ -1208,8 +1217,20 @@ button:focus {
   gap: 0.5rem
 }
 
-.product-price {
-  color: #c59d5f;
+.product-meta-adm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem
+}
+
+.adm-product-span {
+  width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--muted);
+  flex: 1;
 }
 
 .card-actions {

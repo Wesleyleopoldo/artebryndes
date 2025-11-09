@@ -84,9 +84,9 @@ export default function AdminProducts() {
               {p.tag && <span className="product-tag">{p.tag}</span>}
               <img src={p.image} alt={p.name} className="product-image" />
               <h3 className="product-name">{p.name}</h3>
-              <div className="product-meta">
-                <span className="muted">{p.categoryName || '—'}</span>
-                <span className="product-price">R$ {formatPrice(p.price)}</span>
+              <div className="product-meta-adm">
+                <span className="adm-product-span">{p.categoryName || '—'}</span>
+                <span className="product-price-adm">R$ {formatPrice(p.price)}</span>
               </div>
               <div className="card-actions">
                 <button

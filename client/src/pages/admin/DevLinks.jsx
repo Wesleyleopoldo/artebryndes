@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function DevLinks() {
+  if (process.env.NODE_ENV !== 'development') return null; // esconda em produção
   const host = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173';
   const links = [
     { label: 'Home', href: '/' },
@@ -13,7 +14,7 @@ export default function DevLinks() {
     { label: 'Cadastrar Admin', href: '/_adm/portal/cadastrar' },
     { label: 'MFA Admin', href: '/_adm/portal/mfa' },
 
-    { label: 'Admin Home (dashboard)', href: '/admin' },
+    { label: 'Admin Home (dashboard)', href: '/_adm/portal' },
     { label: 'Admin - Produtos', href: '/admin/produtos' },
   { label: 'Admin - Categorias', href: '/admin/categorias' },
     { label: 'Admin - Novo Produto', href: '/admin/produtos/novo' },
