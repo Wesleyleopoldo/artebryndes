@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE || ''; // configure Vercel env var VITE_API_BASE=https://sua-api.onrender.com
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 export async function fetchWithAuth(path, opts = {}) {
   const url = path.startsWith('http') ? path : `${API_BASE}${path}`;
