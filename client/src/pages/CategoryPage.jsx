@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 function CategoryPage() {
   const { slug } = useParams();

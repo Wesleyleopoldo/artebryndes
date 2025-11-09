@@ -1,8 +1,14 @@
 import React from 'react';
 
+import { configDotenv } from 'dotenv';
+
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
+
 export default function DevLinks() {
   if (process.env.NODE_ENV !== 'development') return null; // esconda em produção
-  const host = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173';
+  const host = typeof window !== 'undefined' ? window.location.origin : API_BASE;
   const links = [
     { label: 'Home', href: '/' },
     { label: 'Categoria (exemplo)', href: '/categoria/exemplo' },

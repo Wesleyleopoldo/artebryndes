@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export default function ResetPassword() {
   const [password, setPassword] = useState('');

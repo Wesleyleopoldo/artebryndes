@@ -6,8 +6,11 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { useProducts } from '../../context/ProductContext';
 import { fetchWithAuth } from '../../lib/fetchWithAuth';
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export default function AdminCategories() {
   const [categories, setCategories] = useState([]);

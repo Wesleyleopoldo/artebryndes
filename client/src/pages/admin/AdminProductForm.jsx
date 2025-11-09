@@ -3,8 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../../context/ProductContext";
 import { fetchWithAuth } from "../../lib/fetchWithAuth";
 import { fetchWithAuthForm } from "../../lib/fetchWithAuthForm";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export default function AdminProductForm() {
   const { id } = useParams();

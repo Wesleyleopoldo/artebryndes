@@ -3,8 +3,11 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { fetchWithAuth } from "../../lib/fetchWithAuth";
 import logoArteBryndes from "../../assets/logo-artebryndes-fundoremovido.png";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export default function AdminSignup() {
   const [form, setForm] = useState({ username: "", password: "", confirm: "", name: "", email: "", role: "user" });

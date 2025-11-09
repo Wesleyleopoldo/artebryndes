@@ -1080,6 +1080,12 @@ button:focus {
   gap: 0.75rem
 }
 
+.wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .admin-row {
   display: flex;
   align-items: flex-start;

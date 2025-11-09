@@ -1,4 +1,8 @@
-const API_BASE = import.meta.env.VITE_API_BASE || '';
+import { configDotenv } from "dotenv";
+
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export async function fetchWithAuth(path, opts = {}) {
   const url = path.startsWith('http') ? path : `${API_BASE}${path}`;

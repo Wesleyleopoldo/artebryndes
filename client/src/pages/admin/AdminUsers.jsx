@@ -9,8 +9,11 @@ import { Label } from "../../components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
 import { ChevronLeft, Pencil, Trash2 } from "lucide-react";
 import { fetchWithAuth } from "../../lib/fetchWithAuth";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);

@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import Hero from "../components/Hero";
 import CategoryRow from "../components/CategoryRow";
 import { SITE } from "../data/siteConfig";
+import { configDotenv } from 'dotenv';
 
-const API_BASE = 'http://localhost:5353';
+configDotenv();
+
+const API_BASE = process.env.VITE_API_BASE;
 
 function Home() {
   const [categories, setCategories] = useState([]);
@@ -39,26 +42,28 @@ function Home() {
   }, []);
 
   return (
-    <div data-testid="home-page">
-      <Hero 
-        background={SITE.heroBackground}
-        title={SITE.heroTitle}
-        subtitle={SITE.heroSubtitle}
-      />
-      
-      <main className="main-content">
-        {loading ? (
-          <div className="loading">Carregando produtos...</div>
-        ) : error ? (
-          <div className="error">{error}</div>
-        ) : categories.length === 0 ? (
-          <div className="empty">Nenhum produto disponível no momento.</div>
-        ) : (
-          categories.map(category => (
-            <CategoryRow key={category.id} category={category} />
-          ))
-        )}
-      </main>
+    <div className="wrap">
+      <div data-testid="home-page">
+        <Hero
+          background={SITE.heroBackground}
+          title={SITE.heroTitle}
+          subtitle={SITE.heroSubtitle}
+        />
+
+        <main className="main-content">
+          {loading ? (
+            <div className="loading">Carregando produtos...</div>
+          ) : error ? (
+            <div className="error">{error}</div>
+          ) : categories.length === 0 ? (
+            <div className="empty">Nenhum produto disponível no momento.</div>
+          ) : (
+            categories.map(category => (
+              <CategoryRow key={category.id} category={category} />
+            ))
+          )}
+        </main>
+      </div>
     </div>
   );
 }
